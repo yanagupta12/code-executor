@@ -1,8 +1,11 @@
+
 **/___pycache__
 **/migrations
 
+# Byte-compiled / optimized / DLL files
 venv
 
+# SQLite database files
 db.sqlite3
 
 # Ignore Python cache files
@@ -11,3 +14,6 @@ __pycache__/
 *.pyo
 *.pyd
 *.db
+
+# Testing Requests 
+test.htttp
