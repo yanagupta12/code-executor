@@ -1,9 +1,10 @@
-from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
-from django.contrib.auth import get_user_model, login,logout
+from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.hashers import make_password, check_password
 import json
+from . import utils
 
 
 User = get_user_model()
@@ -15,24 +16,27 @@ def register_user(request):
             json_data = json.loads(request.body.decode('utf-8'))
             email = json_data.get("email")
             password = json_data.get("password")
-            user_name = json_data.get("first_name")
+            first_name = json_data.get("first_name")
             last_name = json_data.get("last_name")
+            user_profile_image = utils.get_avatar()
             
-            try: 
-                new_user = User.objects.create_user(email, password)
-                new_user.first_name = user_name
+            
+            if email and password and last_name and first_name: 
+                new_user = User.objects.create_user(email = email, password = password)
+                new_user.first_name = first_name
                 new_user.last_name = last_name
+                new_user.user_profile_image = user_profile_image
+                new_user.password = (make_password(password))
                 new_user.save()
                 login(request, new_user)
-                return HttpResponse(new_user, status=201)
+                return JsonResponse(utils.get_user_data(new_user), status=201)
             
-            except Exception as e:
+            else:
                 return HttpResponse(e, status=400)
             
         except json.decoder.JSONDecodeError as e:
             return HttpResponse('Invalid JSON data', status=400)
     
-
 
 @csrf_exempt
 def login_user(request):
@@ -42,17 +46,19 @@ def login_user(request):
             email = json_data.get("email")
             password = json_data.get("password")
             
-            try:
-                user = User.objects.get(email = email)
-                if user.check_password(password):
-                    login(request, user)
-                    return HttpResponse("Login successful")
+            if email and password:
+                get_user = User.objects.get(email = email)
+                user = check_password(password, get_user.password)
+                print(user)
+                if user is True:
+                    login(request, get_user)
+                    return JsonResponse(utils.get_user_data(get_user))
                 else:
                     return HttpResponse("Invalid Credntials")
-            except Exception:
-                return HttpResponse("Invalid Credentials")
-        except: 
-            return HttpResponse("Invalid JSON data", status=400)
+            else:
+                return HttpResponse("email and password are required to be passed")
+        except Exception as e: 
+            return HttpResponse(e)
         
         
 @login_required    
@@ -71,17 +77,22 @@ def update_user(request):
         try:
             json_data = json.loads(request.body.decode('utf-8'))
             password = json_data.get("password")
-            user_name = json_data.get("user_name")
+            first_name = json_data.get("first_name")
             last_name = json_data.get("last_name")
-            
+            new_image = json_data.get("image")
             try:
                 user = User.objects.get(email = email)
-                user.first_name = user_name
-                user.last_name = last_name
-                user.set_password(password)
+                if first_name is not None: 
+                    user.first_name = first_name
+                if last_name is not None:
+                    user.last_name = last_name
+                if new_image is not None: 
+                    user.user_profile_image = new_image
+                if password is not None:
+                    user.set_password(password)
                 user.save()
-                return HttpResponse("User updated successfully")
-            
+                login(request, user)
+                return JsonResponse(utils.get_user_data(user), status=202)
             except Exception as e:
                 return HttpResponse(e)
             
