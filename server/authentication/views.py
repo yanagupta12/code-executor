@@ -1,5 +1,5 @@
 from django.http import HttpResponse, JsonResponse
-from django.contrib.auth import get_user_model, authenticate, login, logout
+from django.contrib.auth import get_user_model, login, logout
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password, check_password

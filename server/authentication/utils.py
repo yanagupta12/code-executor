@@ -1,6 +1,5 @@
 import requests
 import random
-import bcrypt
 
 
 API = "https://api.dicebear.com/7.x/"
