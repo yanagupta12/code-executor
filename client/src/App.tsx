@@ -1,12 +1,12 @@
-import './App.scss'
 import Layout from './components/Layout/Index'
+import Home from './components/Home/Index'
 
 function App() {
 
   return (
     <>
       <Layout >
-        <i className='fa fa-heart'></i>
+        <Home />
       </Layout>
     </>
   )
