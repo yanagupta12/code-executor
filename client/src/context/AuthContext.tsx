@@ -8,7 +8,7 @@ export const AuthProvider = ({ children }: { children: any }) => {
 
   const login = async (data: object): Promise<void> => {
     setAuth(true)
-    window.localStorage.setItem('auth', "true")
+    window.localStorage.setItem('auth', 'true')
     setUserData(data)
     console.log('Logged in')
   }

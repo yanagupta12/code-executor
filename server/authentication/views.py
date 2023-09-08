@@ -11,7 +11,7 @@ User = get_user_model()
 
 @csrf_exempt
 def register_user(request):
-    if request.method == "POST":
+    # if request.method == "POST":
         try:
             json_data = json.loads(request.body.decode('utf-8'))
             email = json_data.get("email")
@@ -40,7 +40,7 @@ def register_user(request):
 
 @csrf_exempt
 def login_user(request):
-    if request.method == "POST":
+    # if request.method == "POST":
         try:
             json_data = json.loads(request.body.decode('utf-8'))
             email = json_data.get("email")
@@ -64,7 +64,7 @@ def login_user(request):
 @login_required    
 @csrf_exempt
 def logout_user(request):
-    if request.method == "POST":
+    # if request.method == "POST":
         logout(request)
         return HttpResponse("Logout successful")
     
@@ -72,7 +72,7 @@ def logout_user(request):
 @login_required        
 @csrf_exempt
 def update_user(request):
-    if request.method == "PUT":
+    # if request.method == "PUT":
         email = request.user.email
         try:
             json_data = json.loads(request.body.decode('utf-8'))

@@ -9,13 +9,13 @@ import HttpsIcon from '@mui/icons-material/Https'
 import { useState, useRef, useContext } from 'react'
 import Spinner from '../Spinner/Index'
 import { AuthContext } from '../../context/AuthContext'
-import Link from '@mui/material/Link';
+import Link from '@mui/material/Link'
 
-
-const Form = ({ setShowSignup }:
-  {
-    setShowSignup: React.Dispatch<React.SetStateAction<boolean>>
-  }) => {
+const Form = ({
+  setShowSignup,
+}: {
+  setShowSignup: React.Dispatch<React.SetStateAction<boolean>>
+}) => {
   const firstNameRef = useRef<JSX.Element>(null)
   const lastNameRef = useRef<JSX.Element>(null)
   const emailRef = useRef<JSX.Element>(null)
@@ -45,12 +45,12 @@ const Form = ({ setShowSignup }:
     }
 
     try {
-      const response = await fetch('http://localhost:8000/auth/register', {
+      const response = fetch('http://localhost:8000/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       }).then((res) => res.json())
-      login(response.data)
+      login(response)
       setLoading(false)
     } catch (error) {
       console.error('An error occurred:', error)
@@ -60,9 +60,9 @@ const Form = ({ setShowSignup }:
 
   const FormComponent = () => {
     return (
-      <div className="login">
+      <div className="signup-form">
         <Box
-          className="login-item"
+          className="signup-item"
           sx={{
             display: 'flex',
             flexDirection: 'row',
@@ -160,8 +160,9 @@ const Form = ({ setShowSignup }:
             onClick={() => {
               setShowSignup(false)
             }}
+            underline="none"
           >
-            Button Link
+            Already have an account? Login
           </Link>
         </Box>
 

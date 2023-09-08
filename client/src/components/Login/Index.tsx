@@ -1,5 +1,11 @@
 import './Index.scss'
-import { TextField, Button, InputAdornment, IconButton, Link } from '@mui/material'
+import {
+  TextField,
+  Button,
+  InputAdornment,
+  IconButton,
+  Link,
+} from '@mui/material'
 import Box from '@mui/material/Box'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 import VisibilityIcon from '@mui/icons-material/Visibility'
@@ -9,9 +15,11 @@ import { useState, useRef, useContext } from 'react'
 import Spinner from '../Spinner/Index'
 import { AuthContext } from '../../context/AuthContext'
 
-
-const Form = ({ setShowSignup }:
-  { setShowSignup: React.Dispatch<React.SetStateAction<boolean>> }) => {
+const Form = ({
+  setShowSignup,
+}: {
+  setShowSignup: React.Dispatch<React.SetStateAction<boolean>>
+}) => {
   const emailRef = useRef<JSX.Element>(null)
   const passwordRef = useRef<JSX.Element>(null)
   const [showPassword, setShowPassword] = useState<boolean>(false)
@@ -104,8 +112,9 @@ const Form = ({ setShowSignup }:
             onClick={() => {
               setShowSignup(true)
             }}
+            underline="none"
           >
-            Button Link
+            Don't have an account? Sign up
           </Link>
         </Box>
         <Box className="login-item" sx={{ marginTop: '10px' }}>
@@ -119,7 +128,6 @@ const Form = ({ setShowSignup }:
       </div>
     )
   }
-
 
   return (
     <div className="login-form">
