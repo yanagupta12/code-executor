@@ -2,15 +2,13 @@ import Layout from './components/Layout/Index'
 import Home from './components/Home/Index'
 
 function App() {
-
   return (
     <>
-      <Layout >
+      <Layout>
         <Home />
       </Layout>
     </>
   )
-
 }
 
 export default App

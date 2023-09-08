@@ -1,21 +1,21 @@
 .login-form {
-  height: 300px;
-  width: 600px;
-  border-radius: 10px;
-  background-color: rgb(80, 68, 68);
-  align-items: center;
-  justify-content: center;
-  padding: 10px 10px;
+    height: 300px;
+    width: 600px;
+    border-radius: 10px;
+    background-color: rgb(80, 68, 68);
+    align-items: center;
+    justify-content: center;
+    padding: 10px 10px;
 
-  .login-item {
-    margin: 10px 0px;
+    .login-item {
+        margin: 10px 0px;
 
-    .button {
-      margin: 10px 20px;
+        .button {
+            margin: 10px 20px;
+        }
     }
-  }
 
-  .component {
-    width: 250px;
-  }
+    .component {
+        width: 250px;
+    }
 }
