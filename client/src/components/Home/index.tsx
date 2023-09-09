@@ -1,9 +1,10 @@
 import './Index.scss'
-import Signup from '../Signup/Index'
-import Login from '../Login/Index'
+import Signup from '../Signup'
+import Login from '../Login'
 import { useContext, useState } from 'react'
 import { AuthContext } from '../../context/AuthContext'
-import Card from '../ChoiceCard/Index'
+import Card from '../ChoiceCard'
+import Navbar from '../Navbar'
 
 const AuthenticationFormComponent = () => {
   const [showSignup, setShowSignup] = useState<boolean>(true)

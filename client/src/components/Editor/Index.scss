@@ -1,0 +1,122 @@
+$backgroundColor: linear-gradient(178deg, #ffff33 10%, #3333ff);
+$gray: #34495e;
+$darkgray: #2c504b;
+
+.editor {
+    display: flex;
+    flex-direction: column;
+    .select-bar {
+        height: 5vh;
+        background-color: #182737;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        border-bottom: 1px solid #898e94;
+        .code-view {
+            width: 72%;
+            padding: 0px 20px;
+            display: flex;
+            justify-content: space-between;
+    
+            .select {
+                outline: 10px red;
+                box-shadow: none;
+                flex: 1;
+                font-size: 20px;
+                padding: 0 1em;
+                color: #fff;
+                background-color: $backgroundColor;
+                background-image: none;
+                cursor: pointer;
+                height: 30px;
+                width: 250px;
+                max-width: 300px;
+                margin: 10px 0px;
+                border: 1px solid #ccc;
+
+            }
+
+            .select::-ms-expand {
+                display: none;
+            }
+
+            .button {
+                color: #fff;
+                border-radius: 5px;
+                outline: 10px red;
+                box-shadow: none;
+                padding: 0 1em;
+                background-color: transparent;
+                background-image: none;
+                cursor: pointer;
+                padding: 5px;
+                height: 30px;
+                width: 30px;
+                margin: 10px 0px;
+                background-color: $darkgray;
+            }
+
+            .button:hover {
+                background-color: #34786f;
+            }
+        }
+        .theme {
+            display: flex;
+            flex-direction: row;
+        }
+    }
+
+}
+
+.code-editor {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    position: relative;
+
+    .terminal {
+        display: grid;
+        padding: 2px;
+        width: 25vw;
+        height: 90vh;
+        gap: 4px;
+        
+        @for $i from 1 through 2 {
+            .t-#{$i} {
+                background-color: #1a1a1a;
+                color: #00ff00;
+                font-family: "Courier New", monospace;
+                font-size: 14px;
+                border: 2px solid #007acc;
+                border-radius: 5px;
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+                height: 44vh;
+
+                .heading {
+                    color: #ff9900;
+                    font-size: 18px;
+                    margin: 0;
+                    padding: 5px 0;
+                    background-color: #43494d;
+                    padding: 10px;
+                }
+
+                .output {
+                    color: #00ff00;
+                    font-family: "Courier New", monospace;
+                    font-size: 14px;
+                    margin-top: 10px;
+                    padding: 10px;
+                }
+
+                .output::before {
+                    content: "> ";
+                    color: #00ff00;
+                    font-weight: bold;
+                }
+            }
+
+        }
+    }
+}

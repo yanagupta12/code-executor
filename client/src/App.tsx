@@ -1,13 +1,20 @@
-import Layout from './components/Layout/Index'
-import Home from './components/Home/Index'
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
+
+import Layout from './components/Layout'
+import Home from './components/Home'
+import Editor from './components/Editor'
 
 function App() {
   return (
-    <>
-      <Layout>
-        <Home />
-      </Layout>
-    </>
+    <Layout>
+      <Router>
+        <Routes>
+          <Route path="/" element={
+            <Home />} />
+          <Route path="/editor" element={<Editor />} />
+        </Routes>
+      </Router>
+    </Layout>
   )
 }
 

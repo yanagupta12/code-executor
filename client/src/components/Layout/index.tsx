@@ -1,4 +1,4 @@
-import Footer from './Footer/Index'
+import Footer from './Footer'
 
 export default function Layout({ children }: { children: any }) {
   return (

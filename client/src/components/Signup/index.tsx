@@ -7,7 +7,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility'
 import EmailIcon from '@mui/icons-material/Email'
 import HttpsIcon from '@mui/icons-material/Https'
 import { useState, useRef, useContext } from 'react'
-import Spinner from '../Spinner/Index'
+import Spinner from '../Spinner'
 import { AuthContext } from '../../context/AuthContext'
 import Link from '@mui/material/Link'
 

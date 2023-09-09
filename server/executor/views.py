@@ -14,16 +14,14 @@ DOCKER_IMAGES = utils.DOCKER_IMAGES
 
 
 @csrf_exempt
-@login_required
 def get_languages(request):
-    # if request.method == "GET":
+    if request.method == "GET":
         return JsonResponse(ALL_LANGUAGES, status=200)
 
 
 @csrf_exempt
-@login_required
 def compile_language(request):
-    # if request.method == "POST":
+    if request.method == "POST":
         try:
             json_data = json.loads(request.body.decode('utf-8'))
             language_code = json_data.get("language_code")
