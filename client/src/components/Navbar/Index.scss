@@ -1,0 +1,12 @@
+.navbar{
+    height: 5vh;
+    background-color: #3b354b;
+    border-bottom: 1px solid #776f8c;
+    padding: 0px 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    .heading{
+        font-weight: 900;
+    }
+}

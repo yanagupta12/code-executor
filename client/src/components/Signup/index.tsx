@@ -16,20 +16,20 @@ const Form = ({
 }: {
   setShowSignup: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
-  const firstNameRef = useRef<JSX.Element>(null)
-  const lastNameRef = useRef<JSX.Element>(null)
-  const emailRef = useRef<JSX.Element>(null)
-  const passwordRef = useRef<JSX.Element>(null)
+  const firstNameRef = useRef<HTMLInputElement>(null)
+  const lastNameRef = useRef<HTMLInputElement>(null)
+  const emailRef = useRef<HTMLInputElement>(null)
+  const passwordRef = useRef<HTMLInputElement>(null)
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
   const { login } = useContext(AuthContext)
 
   const handleSubmit = async () => {
     if (
-      !firstNameRef.current.value ||
-      !lastNameRef.current.value ||
-      !emailRef.current.value ||
-      !passwordRef.current.value
+      !firstNameRef.current!.value ||
+      !lastNameRef.current!.value ||
+      !emailRef.current!.value ||
+      !passwordRef.current!.value
     ) {
       alert('All fields are required')
       return
@@ -38,10 +38,10 @@ const Form = ({
     setLoading(true)
 
     const data = {
-      first_name: firstNameRef.current.value,
-      last_name: lastNameRef.current.value,
-      email: emailRef.current.value,
-      password: passwordRef.current.value,
+      first_name: firstNameRef.current!.value,
+      last_name: lastNameRef.current!.value,
+      email: emailRef.current!.value,
+      password: passwordRef.current!.value,
     }
 
     try {

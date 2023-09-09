@@ -4,7 +4,6 @@ import Login from '../Login'
 import { useContext, useState } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import Card from '../ChoiceCard'
-import Navbar from '../Navbar'
 
 const AuthenticationFormComponent = () => {
   const [showSignup, setShowSignup] = useState<boolean>(true)

@@ -11,7 +11,7 @@ User = get_user_model()
 
 @csrf_exempt
 def register_user(request):
-    # if request.method == "POST":
+    if request.method == "POST":
         try:
             json_data = json.loads(request.body.decode('utf-8'))
             email = json_data.get("email")
@@ -29,7 +29,9 @@ def register_user(request):
                 new_user.password = (make_password(password))
                 new_user.save()
                 login(request, new_user)
-                return JsonResponse(utils.get_user_data(new_user), status=201)
+                response =  JsonResponse(utils.get_user_data(new_user), status=201)
+                response.set_cookie('user', new_user.email, max_age=10000)
+                return response
             
             else:
                 return HttpResponse(e, status=400)
@@ -40,7 +42,7 @@ def register_user(request):
 
 @csrf_exempt
 def login_user(request):
-    # if request.method == "POST":
+    if request.method == "POST":
         try:
             json_data = json.loads(request.body.decode('utf-8'))
             email = json_data.get("email")
@@ -52,7 +54,9 @@ def login_user(request):
                 print(user)
                 if user is True:
                     login(request, get_user)
-                    return JsonResponse(utils.get_user_data(get_user))
+                    response = JsonResponse(utils.get_user_data(get_user))
+                    response.set_cookie('user', get_user.email, max_age=10000)
+                    return response
                 else:
                     return HttpResponse("Invalid Credntials")
             else:
@@ -64,7 +68,7 @@ def login_user(request):
 @login_required    
 @csrf_exempt
 def logout_user(request):
-    # if request.method == "POST":
+    if request.method == "POST":
         logout(request)
         return HttpResponse("Logout successful")
     
@@ -72,7 +76,7 @@ def logout_user(request):
 @login_required        
 @csrf_exempt
 def update_user(request):
-    # if request.method == "PUT":
+    if request.method == "PUT":
         email = request.user.email
         try:
             json_data = json.loads(request.body.decode('utf-8'))
@@ -92,11 +96,29 @@ def update_user(request):
                     user.set_password(password)
                 user.save()
                 login(request, user)
-                return JsonResponse(utils.get_user_data(user), status=202)
+                response =  JsonResponse(utils.get_user_data(user), status=202)
+                response.set_cookie('user', user.email, max_age=10000)
+                return response
             except Exception as e:
                 return HttpResponse(e)
             
         except:
             return HttpResponse("Invalid JSON data", status=400)
         
+        
+@login_required
+@csrf_exempt
+def get_user_by_email(request):
+    if request.method == "GET":
+        try:
+            email = request.GET.get('email', None)
+            if email is not None:
+                user = User.objects.get(email = email)
+                print(user)
+                return JsonResponse(utils.get_user_data(user), status=200)
+            else:
+                return HttpResponse("User does not exist")
+        except Exception as e:
+            print(e)
+            return HttpResponse(e)        
         

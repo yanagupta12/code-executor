@@ -1,20 +1,20 @@
 import MonacoEditor from 'react-monaco-editor'
 import { useFetchLanguages } from '../../hooks/useFetchLanguages'
-import React from 'react'
 import './Index.scss'
 
 const Editor = () => {
-  const languages = useFetchLanguages()
-  const [language, setLanguage] = React.useState<string>('')
+  const LANGUAGES = useFetchLanguages()
+  console.log(LANGUAGES)
+  console.log(typeof (LANGUAGES))
 
   return (
     <div className="editor">
       <div className="select-bar">
-        <div className='code-view'> 
+        <div className="code-view">
           <select className="select">
-            <option value="1">Americano</option>
-            <option value="2">Latte</option>
-            <option value="3">Green Tea</option>
+            {Object.keys(LANGUAGES).map((item, index) => (
+              <option key={index}>{item}</option>
+            ))}
           </select>
 
           <button className="button">
