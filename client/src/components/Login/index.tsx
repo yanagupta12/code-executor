@@ -39,10 +39,11 @@ const Form = ({
     try {
       const response = await fetch('http://localhost:8000/auth/login', {
         method: 'POST',
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       }).then((res) => res.json())
-      login(response.data)
+      login(response)
       setLoading(false)
     } catch (error) {
       console.error('An error occurred:', error)

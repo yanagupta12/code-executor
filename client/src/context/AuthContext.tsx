@@ -8,13 +8,13 @@ export const AuthProvider = ({ children }: { children: any }) => {
   const [userData, setUserData] = React.useState<any>({})
   const [userEmail, setUserEmail] = React.useState<string>("")
 
-  const login = (data : any) => {
-    if (data) {
+  const login = async (data: any) => {
+    if (userData) {
       setAuth(true)
       window.localStorage.setItem("auth", "true")
     }
   }
-  
+
 
   useEffect(() => {
     function getCookie(cookieName: string) {
@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }: { children: any }) => {
   }, [auth])
 
   const fetchUserDetails = async () => {
-      useFetchUserDetails(userEmail).then((data) => setUserData(data))
+    useFetchUserDetails(userEmail).then((data) => setUserData(data))
   }
   fetchUserDetails()
 

@@ -31,7 +31,7 @@ const Editor = () => {
       <div className="code-editor">
         <MonacoEditor
           theme="vs-dark"
-          language="javascript"
+          language="cpp"
           height="90vh"
           width="75vw"
         />
