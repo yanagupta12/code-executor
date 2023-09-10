@@ -1,6 +1,6 @@
 .navbar {
     height: 5vh;
-    background-color: #3b354b;
+    background-color: #182737;
     border-bottom: 1px solid #776f8c;
     padding: 0px 20px;
     display: flex;
@@ -12,7 +12,7 @@
     }
 
     .editor-link {
-        background-color: #44c767;
+        background-color: #883ceb;
         border-radius: 28px;
         border: 1px solid #a9c1ab;
         display: inline-block;
@@ -28,5 +28,9 @@
         align-items: center;
         justify-content: center;
         width: 60px;
+    }
+
+    .editor-link:hover {
+        background-color: #411878;
     }
 }

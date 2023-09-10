@@ -1,6 +1,6 @@
 import React from 'react'
 
-const URL = "http://localhost:8000/code/languages/";
+const URL = 'http://localhost:8000/code/languages/'
 
 export const useFetchLanguages = () => {
   const [languages, setLanguages] = React.useState({})

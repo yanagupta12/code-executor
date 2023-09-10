@@ -1,6 +1,6 @@
-import React, { createContext } from 'react'
+import React from 'react'
 
-export const ThemeContext = createContext({})
+export const ThemeContext = React.createContext({})
 
 export const ThemeProvider = ({ children }: { children: any }) => {
   const THEMES: Array<string> = ['dark', 'light']

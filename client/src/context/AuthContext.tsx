@@ -1,49 +1,56 @@
-import React, { createContext, useEffect } from 'react'
+import React from 'react'
 import { useFetchUserDetails } from '../hooks/useFetchUserDetails'
 
-export const AuthContext = createContext<any>({})
+export const AuthContext = React.createContext<any>({})
 
 export const AuthProvider = ({ children }: { children: any }) => {
   const [auth, setAuth] = React.useState<boolean>(false)
   const [userData, setUserData] = React.useState<any>({})
-  const [userEmail, setUserEmail] = React.useState<string>("")
+  const [userEmail, setUserEmail] = React.useState<string>('')
 
   const login = async (data: any) => {
-    if (userData) {
+    if (data) {
       setAuth(true)
-      window.localStorage.setItem("auth", "true")
+      window.localStorage.setItem('auth', 'true')
     }
   }
 
+  const logout = async () => {
+    setAuth(false)
+    document.cookie = 'user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+    document.cookie =
+      'csrftoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+    window.localStorage.removeItem('auth')
+  }
 
-  useEffect(() => {
+  React.useEffect(() => {
     function getCookie(cookieName: string) {
-      const name = cookieName + "=";
-      const decodedCookie = decodeURIComponent(document.cookie);
-      const cookieArray = decodedCookie.split(';');
+      const name = cookieName + '='
+      const decodedCookie = decodeURIComponent(document.cookie)
+      const cookieArray = decodedCookie.split(';')
 
       for (let i = 0; i < cookieArray.length; i++) {
-        let cookie = cookieArray[i];
+        let cookie = cookieArray[i]
         while (cookie.charAt(0) === ' ') {
-          cookie = cookie.substring(1);
+          cookie = cookie.substring(1)
         }
         if (cookie.indexOf(name) === 0) {
-          return cookie.substring(name.length, cookie.length);
+          return cookie.substring(name.length, cookie.length)
         }
       }
-      return "";
+      return ''
     }
-    setUserEmail(getCookie("user"))
-    if (userEmail !== "") { window.localStorage.setItem("auth", "true") }
-    if (window.localStorage.getItem("auth") === "true") { setAuth(true) }
+    setUserEmail(getCookie('user'))
 
-  }, [auth])
+    if (window.localStorage.getItem('auth') === 'true') {
+      setAuth(true)
+    }
+  }, [])
 
   const fetchUserDetails = async () => {
     useFetchUserDetails(userEmail).then((data) => setUserData(data))
   }
   fetchUserDetails()
-
 
   return (
     <AuthContext.Provider
@@ -51,6 +58,7 @@ export const AuthProvider = ({ children }: { children: any }) => {
         auth: auth,
         userData: userData,
         login: login,
+        logout: logout,
       }}
     >
       {children}
