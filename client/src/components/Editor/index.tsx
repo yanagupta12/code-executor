@@ -3,13 +3,15 @@ import './Index.scss'
 import React from 'react'
 import { LanguageContext } from '../../context/LanguageContext'
 import { AuthContext } from '../../context/AuthContext'
-import { Avatar, Box, Icon, IconButton, Tooltip } from '@mui/material'
+import { Avatar, Box, IconButton, Tooltip } from '@mui/material'
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord'
 
 const Editor = () => {
   const LanuguageRef = React.useRef<any>(null)
 
-  const { LANGUAGES, setLanguage, language } = React.useContext<any>(LanguageContext)
-  const { userData } = React.useContext<any>(AuthContext)
+  const { LANGUAGES, setLanguage, language } =
+    React.useContext<any>(LanguageContext)
+  const { userData, auth } = React.useContext<any>(AuthContext)
 
   const blob = new Blob([userData.image], { type: 'image/svg+xml' })
   const url = URL.createObjectURL(blob)
@@ -21,8 +23,10 @@ const Editor = () => {
           <select
             className="select"
             ref={LanuguageRef}
+            placeholder='Select Language'
+            defaultChecked={language}
             onChange={(e) => {
-              setLanguage((e.target.value).toLowerCase())
+              setLanguage(e.target.value.toLowerCase())
               console.log(language)
             }}
           >
@@ -36,24 +40,33 @@ const Editor = () => {
         </div>
 
         <div className="theme">
-          <IconButton>X</IconButton>
-          <IconButton>X</IconButton>
-          <IconButton>X</IconButton>
-          <IconButton>X</IconButton>
+          <IconButton>
+            <FiberManualRecordIcon sx={{ color: 'green' }} />
+          </IconButton>
+          <IconButton>
+            <FiberManualRecordIcon sx={{ color: 'red' }} />
+          </IconButton>
+          <IconButton>
+            <FiberManualRecordIcon sx={{ color: 'yellow' }} />
+          </IconButton>
+          <IconButton>
+            <FiberManualRecordIcon sx={{ color: 'blue' }} />
+          </IconButton>
         </div>
-
-        <Box sx={{ flexGrow: 0 }}>
-          <Tooltip title="Profile Summary">
-            <IconButton
-              sx={{ textTransform: 'uppercase', height: 50, width: 50 }}
-            >
-              <Avatar
-                alt={`${userData.first_name} ${userData.last_name}`}
-                src={url}
-              />
-            </IconButton>
-          </Tooltip>
-        </Box>
+        {auth && (
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Profile Summary">
+              <IconButton
+                sx={{ textTransform: 'uppercase', height: 50, width: 50 }}
+              >
+                <Avatar
+                  alt={`${userData.first_name} ${userData.last_name}`}
+                  src={url}
+                />
+              </IconButton>
+            </Tooltip>
+          </Box>
+        )}
       </div>
 
       <div className="code-editor">

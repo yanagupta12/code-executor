@@ -13,7 +13,7 @@ import {
 } from '@mui/material'
 
 const Navbar = () => {
-  const { userData } = useContext<any>(AuthContext)
+  const { userData, auth } = useContext<any>(AuthContext)
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   )
@@ -50,17 +50,19 @@ const Navbar = () => {
       </Box>
 
       <Box sx={{ flexGrow: 0 }}>
-        <Tooltip title="Profile Summary">
-          <IconButton
-            onClick={handleOpenUserMenu}
-            sx={{ textTransform: 'uppercase', height: 50, width: 50 }}
-          >
-            <Avatar
-              alt={`${userData.first_name} ${userData.last_name}`}
-              src={url}
-            />
-          </IconButton>
-        </Tooltip>
+        {auth && (
+          <Tooltip title="Profile Summary">
+            <IconButton
+              onClick={handleOpenUserMenu}
+              sx={{ textTransform: 'uppercase', height: 50, width: 50 }}
+            >
+              <Avatar
+                alt={`${userData.first_name} ${userData.last_name}`}
+                src={url}
+              />
+            </IconButton>
+          </Tooltip>
+        )}
 
         <Menu
           sx={{ mt: '45px' }}

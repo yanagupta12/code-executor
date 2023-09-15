@@ -83,6 +83,7 @@ $darkgray: #2c504b;
         width: 25vw;
         height: 90vh;
         gap: 4px;
+        background-color: #00c9cc;
         
         @for $i from 1 through 2 {
             .t-#{$i} {

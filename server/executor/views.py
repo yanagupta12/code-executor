@@ -2,7 +2,7 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 import tempfile
-import docker
+import subprocess
 import json
 from . import utils
 import os
@@ -10,7 +10,6 @@ import os
 
 ALL_LANGUAGES = utils.LANGUAGES
 ALL_BUILD_COMMANDS = utils.BUILD_COMMANDS
-DOCKER_IMAGES = utils.DOCKER_IMAGES
 
 
 @csrf_exempt
@@ -32,38 +31,41 @@ def compile_language(request):
             
             if language_code and source_code:
                 temp_dir = tempfile.mkdtemp()
-                print(f"main.{language_code}")
                 code_file_path = os.path.join(temp_dir, f"main.{language_code}")
                 with open(code_file_path, "w") as code_file:
                     code_file.write(source_code)
                     
-                with open(code_file_path, "r") as code_file:
-                    print(code_file.read())
+                if language_code == "py":
+                    process = subprocess.Popen(["python", "main.py"], cwd=temp_dir, stderr=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
+                    stdout, stderr = process.communicate()
+                    return JsonResponse({'result': stdout, 'error': stderr}, status=200)
+                
+                
+                if language_code == "js":
+                    process = subprocess.Popen(["node", "main.js"], cwd=temp_dir, stderr=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
+                    stdout, stderr = process.communicate()
+                    return JsonResponse({'result': stdout, 'error': stderr}, status=200)
+                                  
+                build_command = ALL_BUILD_COMMANDS[language_code]                        
+                subprocess.run(build_command, cwd=temp_dir, stderr=subprocess.STDOUT, check=True)
+                process = subprocess.Popen(build_command, cwd=temp_dir, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+                executable_path = os.path.join(temp_dir, "main")
+                
+                if language_code == "java": 
+                    result = subprocess.check_output(["java", "main"], cwd=temp_dir, stderr=subprocess.STDOUT, text=True)
+                    error = process.stderr.read().decode('utf-8')
+                    return JsonResponse({'result': result, 'error': error}, status=200)
+                
+                if language_code == "cpp" or language_code == "c" or language_code == "rs":
+                    result = subprocess.check_output([executable_path], stderr=subprocess.STDOUT, text=True)
+                    error = process.stderr.read().decode('utf-8') 
+                    return JsonResponse({'result': result, 'error': error}, status=400)
+                
 
-
-                
-                docker_client = docker.from_env()
-                print(docker_client)
-                print("docker client created")
-                print(code_file_path)
-                
-                container = docker_client.containers.run(
-                    DOCKER_IMAGES[language_code],
-                    command=ALL_BUILD_COMMANDS[language_code].format(filename=code_file_path),
-                    volumes={temp_dir: {'bind': '/app', 'mode': 'rw'}},
-                    working_dir='/app',
-                    stdout=True,
-                    stderr=True,
-                    remove=True,
-                )
-                
-                print(container)
-                print("container created")
-                output = container.decode("utf-8")
-                
-                return JsonResponse({'output': output, 'error': ''})            
             else: 
                 return HttpResponse("both language code and source code are required", status=400)        
         except Exception as e:
             return HttpResponse(f"e {e}", status=400)
-
+        
+        
+        

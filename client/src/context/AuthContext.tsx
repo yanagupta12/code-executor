@@ -44,6 +44,8 @@ export const AuthProvider = ({ children }: { children: any }) => {
 
     if (window.localStorage.getItem('auth') === 'true') {
       setAuth(true)
+    } else {
+      setAuth(false)
     }
   }, [])
 
