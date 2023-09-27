@@ -27,7 +27,7 @@ def compile_language(request):
             source_code = json_data.get("source_code")
             
             if language_code not in ALL_LANGUAGES.keys():
-                return HttpResponse("language not supported", status=400)
+                return HttpResponse(f"language code {language_code} not supported", status=400)
             
             if language_code and source_code:
                 temp_dir = tempfile.mkdtemp()
@@ -46,26 +46,37 @@ def compile_language(request):
                     stdout, stderr = process.communicate()
                     return JsonResponse({'result': stdout, 'error': stderr}, status=200)
                                   
-                build_command = ALL_BUILD_COMMANDS[language_code]                        
-                subprocess.run(build_command, cwd=temp_dir, stderr=subprocess.STDOUT, check=True)
-                process = subprocess.Popen(build_command, cwd=temp_dir, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
-                executable_path = os.path.join(temp_dir, "main")
+               
                 
                 if language_code == "java": 
+                    build_command = ALL_BUILD_COMMANDS[language_code]                        
+                    subprocess.run(build_command, cwd=temp_dir, stderr=subprocess.STDOUT, check=True)
+                    process = subprocess.Popen(build_command, cwd=temp_dir, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+                    executable_path = os.path.join(temp_dir, "main")
                     result = subprocess.check_output(["java", "main"], cwd=temp_dir, stderr=subprocess.STDOUT, text=True)
                     error = process.stderr.read().decode('utf-8')
                     return JsonResponse({'result': result, 'error': error}, status=200)
                 
-                if language_code == "cpp" or language_code == "c" or language_code == "rs":
-                    result = subprocess.check_output([executable_path], stderr=subprocess.STDOUT, text=True)
-                    error = process.stderr.read().decode('utf-8') 
-                    return JsonResponse({'result': result, 'error': error}, status=400)
                 
+                if language_code == "cpp" or language_code == "c" or language_code == "rs":
+                    build_command = ALL_BUILD_COMMANDS.get(language_code)  # Use .get() to avoid KeyError
+                    error = ""
+                    result = ""
 
+                    try:
+                        build_process = subprocess.run(build_command, cwd=temp_dir, stderr=subprocess.STDOUT, stdout=subprocess.PIPE, text=True, check=True)
+                        executable_path = os.path.join(temp_dir, "main")
+                        result = subprocess.check_output([executable_path], stderr=subprocess.STDOUT, text=True)
+                    except subprocess.CalledProcessError as e:
+                        error = e.stdout 
+                    except Exception as e:
+                        error = str(e)
+                        
+                    return JsonResponse({'result': result, 'error': error}, status=200)
+
+                
             else: 
                 return HttpResponse("both language code and source code are required", status=400)        
         except Exception as e:
             return HttpResponse(f"e {e}", status=400)
-        
-        
         

@@ -25,11 +25,6 @@ CORS_ALLOWED_ORIGIN_REGEXES = [
     'http://localhost:5173',
 ]
 
-CORS_ORIGIN_WHITELIST = (
-    'localhost:5173',
-    '127.0.0.1:5173'
-)
-
 
 
 INSTALLED_APPS = [
