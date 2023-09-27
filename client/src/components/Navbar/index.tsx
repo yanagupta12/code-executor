@@ -43,9 +43,7 @@ const Navbar = () => {
           sx={{ color: 'white', textTransform: 'uppercase' }}
           className="editor-link"
         >
-          <Typography variant="h6" className="heading">
-            Editor
-          </Typography>
+          Editor
         </Link>
       </Box>
 

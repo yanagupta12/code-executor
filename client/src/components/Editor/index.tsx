@@ -3,6 +3,7 @@ import './Index.scss'
 import React, { useEffect, useState } from 'react'
 import { LanguageContext } from '../../context/LanguageContext'
 import { AuthContext } from '../../context/AuthContext'
+import { CodeContext } from '../../context/CodeContext'
 import { Avatar, Box, IconButton, Tooltip } from '@mui/material'
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord'
 
@@ -22,7 +23,7 @@ function getKeyByValue<T>(
 
 const Editor = () => {
   const LanuguageRef = React.useRef<any>(null)
-  const editorRef = React.useRef(null)
+  const editorRef = React.useRef<any>(null)
 
   function handleEditorDidMount(editor: any) {
     editorRef.current = editor
@@ -38,23 +39,15 @@ const Editor = () => {
     setResponse,
   } = React.useContext<any>(LanguageContext)
   const { userData, auth } = React.useContext<any>(AuthContext)
+  const { code, setCode } = React.useContext<any>(CodeContext)
 
   const [stdout, setStdout] = useState<string>('')
   const [stderr, setStderr] = useState<string>('')
 
-
   useEffect(() => {
     console.log(LanuguageRef.current.value)
-
-    if (editorRef.current != null) {
-      console.log(editorRef.current.getValue())
-    }
-
     if (language.toLowerCase() == 'java')
       return alert('Please use Main class only for java')
-    console.log(languageCode)
-    console.log(language)
-
   }, [response, language, languageCode])
 
   // To get the image of user from the database, the image is in svg format
@@ -66,50 +59,52 @@ const Editor = () => {
       alert('Please Select a Language')
       return
     }
-    const data = {
-      source_code: editorRef.current.getValue(),
-      language_code: languageCode,
-    }
-    try {
-      const response = await fetch('http://localhost:8000/code/execute/', {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      }).then((res) => res.json())
+    if (editorRef.current) {
+      const data = {
+        source_code: code,
+        language_code: languageCode,
+      }
 
-      setResponse(response)
+      try {
+        const response = await fetch('http://localhost:8000/code/execute/', {
+          method: 'POST',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        }).then((res) => res.json())
 
-      setStdout(response.result
-        .split('\n')
-        .map((line: any, index: number) => {
-          console.log(line.length);
-          return (
-            <React.Fragment key={index}>
-              <div dangerouslySetInnerHTML={{ __html: line.replace(/ /g, '&nbsp;') + '&nbsp;' }} />
-            </React.Fragment>
-          );
-        })
-      )
+        setResponse(response)
 
-      setStderr(
-        response.error
-          .split("\n")
-          .map((line: any, index: number) => {
-            console.log(line)
+        setStdout(
+          response.result.split('\n').map((line: any, index: number) => {
             return (
               <React.Fragment key={index}>
-                <div dangerouslySetInnerHTML={{ __html: line.replace(/ /g, '&nbsp;') }} />
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: line.replace(/ /g, '&nbsp;') + '&nbsp;',
+                  }}
+                />
               </React.Fragment>
-            );
+            )
           })
-      );
+        )
 
-
-
-      console.log(response)
-    } catch (error) {
-      console.error('An error occurred:', error)
+        setStderr(
+          response.error.split('\n').map((line: any, index: number) => {
+            return (
+              <React.Fragment key={index}>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: line.replace(/ /g, '&nbsp;'),
+                  }}
+                />
+              </React.Fragment>
+            )
+          })
+        )
+      } catch (error) {
+        console.error('An error occurred:', error)
+      }
     }
   }
 
@@ -132,7 +127,9 @@ const Editor = () => {
             ))}
           </select>
 
-          <div className="language">{language}</div>
+          <div className="language">
+            {language ? language : 'Language Not Selected'}
+          </div>
 
           {/* Submit Button  */}
           <button className="button" onClick={() => handleSubmit()}>
@@ -178,6 +175,7 @@ const Editor = () => {
           height="90vh"
           width="75vw"
           onMount={handleEditorDidMount}
+          onChange={(value) => setCode(value)}
         />
 
         <div className="terminal">
@@ -186,9 +184,7 @@ const Editor = () => {
             <div className="output">
               <br />
               {stdout}
-              <div className="error">
-                {stderr}
-              </div>
+              <div className="error">{stderr}</div>
             </div>
           </div>
 

@@ -1,6 +1,6 @@
 import './Index.scss'
 
-export default function Footer() {
+const Footer = () =>  {
   return (
     <div className="footer">
       Made with &nbsp; <i className="fa fa-heart"></i> &nbsp; by Yana &copy;
@@ -8,3 +8,6 @@ export default function Footer() {
     </div>
   )
 }
+
+
+export default Footer 

@@ -9,18 +9,25 @@ export const AuthProvider = ({ children }: { children: any }) => {
   const [userEmail, setUserEmail] = React.useState<string>('')
 
   const login = async (data: any) => {
-    if (data) {
+    console.log(data)
+    if (data.email && data.first_name && data.last_name) {
       setAuth(true)
-      window.localStorage.setItem('auth', 'true')
+      setUserData(data)
+    } else {
+      alert('There was a problem')
     }
   }
+  let userdata: Object = useFetchUserDetails(userEmail).then(
+    (data) => (userdata = data)
+  )
 
   const logout = async () => {
-    setAuth(false)
     document.cookie = 'user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
     document.cookie =
       'csrftoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
-    window.localStorage.removeItem('auth')
+    setAuth(false)
+    setUserEmail('')
+    setUserData({})
   }
 
   React.useEffect(() => {
@@ -40,19 +47,18 @@ export const AuthProvider = ({ children }: { children: any }) => {
       }
       return ''
     }
-    setUserEmail(getCookie('user'))
+    const email: string = getCookie('user')
 
-    if (window.localStorage.getItem('auth') === 'true') {
+    setUserEmail(email)
+
+    if (email) setAuth(true)
+
+    if (userData.email) {
       setAuth(true)
-    } else {
-      setAuth(false)
     }
-  }, [])
 
-  const fetchUserDetails = async () => {
-    useFetchUserDetails(userEmail).then((data) => setUserData(data))
-  }
-  fetchUserDetails()
+    setUserData(userdata)
+  }, [])
 
   return (
     <AuthContext.Provider

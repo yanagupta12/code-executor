@@ -45,7 +45,7 @@ const Form = ({
     }
 
     try {
-      const response = fetch('http://localhost:8000/auth/register', {
+      const response = await fetch('http://localhost:8000/auth/register', {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },

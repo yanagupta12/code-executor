@@ -1,6 +1,6 @@
 import Footer from './Footer'
 
-export default function Layout({ children }: { children: JSX.Element }) {
+const Layout = ({ children }: { children: JSX.Element }) => {
   return (
     <div>
       {children}
@@ -8,3 +8,5 @@ export default function Layout({ children }: { children: JSX.Element }) {
     </div>
   )
 }
+
+export default Layout
