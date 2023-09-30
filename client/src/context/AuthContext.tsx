@@ -1,7 +1,5 @@
 import React from 'react'
 import { useFetchUserDetails } from '../hooks/useFetchUserDetails'
-// import { useFetchUserDetails } from '../hooks/useFetchUserDetails'
-
 export const AuthContext = React.createContext<any>({})
 
 export const AuthProvider = ({ children }: { children: any }) => {
@@ -10,28 +8,25 @@ export const AuthProvider = ({ children }: { children: any }) => {
   const [userData, setUserData] = React.useState<Object>({})
 
   const login = async (data: any) => {
-    console.log(data)
     if (data.email && data.first_name && data.last_name) {
-      setAuth(true)
+      setUserData(data)
+      setAuth(true);
     } else {
-      alert('There was a problem')
+      alert('There was a problem');
     }
   }
-
   useFetchUserDetails(userEmail).then(res => {
     setUserData(res)
   })
 
-  const logout = async () => {
-    document.cookie = 'user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
-    document.cookie =
-      'csrftoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+  const logout = () => {
     setAuth(false)
-    setUserEmail('')
-    setUserData({})
+    document.cookie = 'user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    document.cookie = 'csrftoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
   }
 
   React.useEffect(() => {
+
     function getCookie(cookieName: string) {
       const name = cookieName + '='
       const decodedCookie = decodeURIComponent(document.cookie)
@@ -48,6 +43,8 @@ export const AuthProvider = ({ children }: { children: any }) => {
       }
       return ''
     }
+
+
     const email: string = getCookie('user')
 
     setUserEmail(email)

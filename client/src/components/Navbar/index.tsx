@@ -38,7 +38,7 @@ const Navbar = () => {
       </Box>
       <Box sx={{ flexGrow: 1 }}>
         <Link
-          to="/editor" 
+          to="/editor"
           className="editor-link"
         >
           Editor
@@ -79,7 +79,9 @@ const Navbar = () => {
           <MenuItem onClick={handleCloseUserMenu}>
             <Link to="/user/summary">Profile</Link>
           </MenuItem>
-          <MenuItem onClick={handleCloseUserMenu}>Dashboard</MenuItem>
+          <MenuItem onClick={handleCloseUserMenu}>
+            <Link to="/user/dashboard">Dashboard</Link>
+          </MenuItem>
           <MenuItem onClick={handleCloseUserMenu}>Logout</MenuItem>
         </Menu>
       </Box>

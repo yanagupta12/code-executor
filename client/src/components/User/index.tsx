@@ -5,11 +5,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { TextField, Button } from '@mui/material';
 
-interface PrivateRouteProps {
-  auth: boolean;
-}
-
-const User: React.FC<PrivateRouteProps> = () => {
+const User: React.FC = () => {
   const { userData, auth } = useContext(AuthContext);
   const blob = new Blob([userData.image], { type: 'image/svg+xml' });
   const url = URL.createObjectURL(blob);
