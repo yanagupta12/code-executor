@@ -1,25 +1,26 @@
 import React from 'react'
 import { useFetchUserDetails } from '../hooks/useFetchUserDetails'
+// import { useFetchUserDetails } from '../hooks/useFetchUserDetails'
 
 export const AuthContext = React.createContext<any>({})
 
 export const AuthProvider = ({ children }: { children: any }) => {
   const [auth, setAuth] = React.useState<boolean>(false)
-  const [userData, setUserData] = React.useState<any>({})
   const [userEmail, setUserEmail] = React.useState<string>('')
+  const [userData, setUserData] = React.useState<Object>({})
 
   const login = async (data: any) => {
     console.log(data)
     if (data.email && data.first_name && data.last_name) {
       setAuth(true)
-      setUserData(data)
     } else {
       alert('There was a problem')
     }
   }
-  let userdata: Object = useFetchUserDetails(userEmail).then(
-    (data) => (userdata = data)
-  )
+
+  useFetchUserDetails(userEmail).then(res => {
+    setUserData(res)
+  })
 
   const logout = async () => {
     document.cookie = 'user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
@@ -51,13 +52,8 @@ export const AuthProvider = ({ children }: { children: any }) => {
 
     setUserEmail(email)
 
-    if (email) setAuth(true)
+    if (email) setAuth(true);
 
-    if (userData.email) {
-      setAuth(true)
-    }
-
-    setUserData(userdata)
   }, [])
 
   return (

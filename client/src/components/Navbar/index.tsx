@@ -1,6 +1,7 @@
-import React, { useContext } from 'react'
-import { AuthContext } from '../../context/AuthContext'
-import './Index.scss'
+import React, { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import './Index.scss';
 import {
   Box,
   Typography,
@@ -9,25 +10,24 @@ import {
   Avatar,
   Menu,
   MenuItem,
-  Link,
-} from '@mui/material'
+} from '@mui/material';
 
 const Navbar = () => {
-  const { userData, auth } = useContext<any>(AuthContext)
+  const { userData, auth } = useContext(AuthContext);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
-  )
+  );
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget)
+    setAnchorElUser(event.currentTarget);
   }
 
   const handleCloseUserMenu = () => {
-    setAnchorElUser(null)
+    setAnchorElUser(null);
   }
 
-  const blob = new Blob([userData.image], { type: 'image/svg+xml' })
-  const url = URL.createObjectURL(blob)
+  const blob = new Blob([userData.image], { type: 'image/svg+xml' });
+  const url = URL.createObjectURL(blob);
 
   return (
     <div className="navbar">
@@ -38,9 +38,7 @@ const Navbar = () => {
       </Box>
       <Box sx={{ flexGrow: 1 }}>
         <Link
-          href="/editor"
-          underline="none"
-          sx={{ color: 'white', textTransform: 'uppercase' }}
+          to="/editor" 
           className="editor-link"
         >
           Editor
@@ -78,13 +76,15 @@ const Navbar = () => {
           open={Boolean(anchorElUser)}
           onClose={handleCloseUserMenu}
         >
-          <MenuItem onClick={handleCloseUserMenu}>Profile </MenuItem>
+          <MenuItem onClick={handleCloseUserMenu}>
+            <Link to="/user/summary">Profile</Link>
+          </MenuItem>
           <MenuItem onClick={handleCloseUserMenu}>Dashboard</MenuItem>
           <MenuItem onClick={handleCloseUserMenu}>Logout</MenuItem>
         </Menu>
       </Box>
     </div>
-  )
+  );
 }
 
-export default Navbar
+export default Navbar;
