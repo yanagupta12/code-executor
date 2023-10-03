@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import { Link } from 'react-router-dom';
 import './Index.scss';
 import {
   Box,
@@ -11,9 +11,13 @@ import {
   Menu,
   MenuItem,
 } from '@mui/material';
+import { Button } from '@mui/base';
+
+
+
 
 const Navbar = () => {
-  const { userData, auth } = useContext(AuthContext);
+  const { userData, auth, logout } = useContext(AuthContext);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
@@ -82,7 +86,12 @@ const Navbar = () => {
           <MenuItem onClick={handleCloseUserMenu}>
             <Link to="/user/dashboard">Dashboard</Link>
           </MenuItem>
-          <MenuItem onClick={handleCloseUserMenu}>Logout</MenuItem>
+          <MenuItem onClick={() => {
+            logout()
+            handleCloseUserMenu();
+          }}>
+            Logout
+          </MenuItem>
         </Menu>
       </Box>
     </div>

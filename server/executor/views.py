@@ -29,7 +29,7 @@ def compile_language(request):
             if language_code not in ALL_LANGUAGES.keys():
                 return HttpResponse(f"language code {language_code} not supported", status=400)
             
-            if language_code and source_code:
+            if language_code:
                 temp_dir = tempfile.mkdtemp()
                 code_file_path = os.path.join(temp_dir, f"main.{language_code}")
                 with open(code_file_path, "w") as code_file:
@@ -76,7 +76,7 @@ def compile_language(request):
 
                 
             else: 
-                return HttpResponse("both language code and source code are required", status=400)        
+                return HttpResponse("unsupported language", status=400)        
         except Exception as e:
             return HttpResponse(f"e {e}", status=400)
         

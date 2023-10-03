@@ -28,6 +28,7 @@ CORS_ALLOWED_ORIGIN_REGEXES = [
 
 
 INSTALLED_APPS = [
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -36,7 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'authentication',
     'corsheaders',
+    'collaborate',
 ]
+
+ASGI_APPLICATION = 'codeexec.asgi.application'
+WSGI_APPLICATION = 'codeexec.wsgi.application'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -67,7 +72,6 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'codeexec.wsgi.application'
 
 DATABASES = {
     'default': {

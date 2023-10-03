@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './Index.scss';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
+import { Button } from '@mui/material';
 
 
 const Dashboard: React.FC = () => {
@@ -18,9 +19,26 @@ const Dashboard: React.FC = () => {
     return (
         <div className="page">
             <h1>
-
                 Welcome to the Dashboard {userData.first_name}
             </h1>
+            <div>
+                <Button>
+                    Create Interview Room
+                </Button>
+                <Button>
+                    Join Interview Room
+                </Button>
+            </div>
+            <div className='rooms'>
+                <h2>
+                    Interview Rooms
+                </h2>
+
+                <div>
+                    All the interview room will be listed here
+                </div>
+
+            </div>
         </div>
     );
 };

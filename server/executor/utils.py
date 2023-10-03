@@ -1,12 +1,12 @@
 LANGUAGES = {
-    "go": "Go", # Done 
-    "js": "JavaScript", # Done 
-    "py": "Python", # Done 
-    "cpp": "C++", # Done 
-    "c": "C", # Done 
-    "rs": "Rust", # Done 
-    "java": "Java", # Done 
-    "cs": "C#" # Done 
+    "go": "go", # Done 
+    "js": "javascript", # Done 
+    "py": "python", # Done 
+    "cpp": "cpp", # Done 
+    "c": "c", # Done 
+    "rs": "rust", # Done 
+    "java": "java", # Done 
+    "cs": "csharp" # Done 
 }
 
 

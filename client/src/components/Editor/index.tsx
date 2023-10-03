@@ -6,6 +6,9 @@ import { AuthContext } from '../../context/AuthContext'
 import { CodeContext } from '../../context/CodeContext'
 import { Avatar, Box, IconButton, Tooltip } from '@mui/material'
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord'
+import { Link } from "react-router-dom"
+
+
 
 function getKeyByValue<T>(
   object: Record<string, T>,
@@ -20,6 +23,7 @@ function getKeyByValue<T>(
     }
   }
 }
+
 
 const Editor = () => {
   const LanuguageRef = React.useRef<any>(null)
@@ -41,14 +45,21 @@ const Editor = () => {
   const { userData, auth } = React.useContext<any>(AuthContext)
   const { code, setCode } = React.useContext<any>(CodeContext)
 
+
+
   const [stdout, setStdout] = useState<string>('')
   const [stderr, setStderr] = useState<string>('')
 
+
+
   useEffect(() => {
-    console.log(LanuguageRef.current.value)
+    // console.log(languageCode)
+    // console.log(LanuguageRef.current.value)
     if (language.toLowerCase() == 'java')
       return alert('Please use Main class only for java')
   }, [response, language, languageCode])
+
+
 
   // To get the image of user from the database, the image is in svg format
   const blob = new Blob([userData.image], { type: 'image/svg+xml' })
@@ -108,33 +119,51 @@ const Editor = () => {
     }
   }
 
+
   return (
     <div className="editor">
       <div className="select-bar">
+
         <div className="code-view">
+
+          <Tooltip title="Go to home">
+            <Link className='link' to="/">
+              <i className="fas fa-angle-left"></i>
+            </Link>
+          </Tooltip>
           <select
             className="select"
             ref={LanuguageRef}
             placeholder="Select Language"
             defaultChecked={language}
             onChange={(e) => {
-              setLanguageCode(getKeyByValue(LANGUAGES, e.target.value))
-              setLanguage(e.target.value)
+              setLanguageCode(getKeyByValue(LANGUAGES, e.target.value.toLowerCase()))
+              setLanguage((e.target.value).toLowerCase())
+
             }}
           >
             {Object.keys(LANGUAGES).map((key, index) => (
-              <option key={index}>{LANGUAGES[key]}</option>
+              <option key={index}>
+                {LANGUAGES[key].charAt(0).toUpperCase() + LANGUAGES[key].slice(1)}
+              </option>
             ))}
+
           </select>
 
           <div className="language">
-            {language ? language : 'Language Not Selected'}
+            {language ? language.toUpperCase() : 'Language Not Selected'}
           </div>
 
           {/* Submit Button  */}
-          <button className="button" onClick={() => handleSubmit()}>
-            <i className="fa fa-play"></i>
-          </button>
+          <div className='buttons'>
+            <Tooltip title="Run Code">
+
+              <button className="button" onClick={() => handleSubmit()}>
+                <i className="fa fa-play"></i>
+              </button>
+            </Tooltip>
+
+          </div>
         </div>
 
         <div className="theme">

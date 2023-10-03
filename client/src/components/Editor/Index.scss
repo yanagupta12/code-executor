@@ -21,6 +21,29 @@ $darkgray: #2c504b;
             align-items: center;
             justify-content: space-between;
 
+            .link {
+                text-decoration: none;
+                color: #007bff;
+                display: flex;
+                align-items: center;
+                font-size: 14px;
+                font-weight: bold;
+                padding: 8px 12px;
+                margin: 0 10px;
+                transition: color 0.3s ease, background-color 0.3s ease;
+                border-radius: 5px;
+
+                i {
+                    margin-right: 6px;
+                    font-size: 18px;
+                }
+
+                &:hover {
+                    color: #0056b3;
+                    background-color: #f0f0f0;
+                }
+            }
+
             .language {
                 font-weight: bold;
                 margin: 10px;
@@ -50,104 +73,109 @@ $darkgray: #2c504b;
                 display: none;
             }
 
-            .button {
-                color: #fff;
-                border-radius: 5px;
-                outline: 10px red;
-                box-shadow: none;
-                padding: 0 1em;
-                background-color: transparent;
-                background-image: none;
-                cursor: pointer;
-                padding: 5px;
-                height: 30px;
-                width: 30px;
-                margin: 10px 0px;
-                background-color: $darkgray;
-                align-self: flex-end;
-                justify-self: flex-end;
-            }
+            .buttons {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
 
-            .button:hover {
-                background-color: #34786f;
-            }
-        }
+                .button {
+                    background-color: #007bff;
+                    color: #fff;
+                    border: none;
+                    border-radius: 5px;
+                    outline: none;
+                    padding: 8px 12px;
+                    margin: 0 10px;
+                    cursor: pointer;
+                    font-size: 14px;
+                    transition: background-color 0.3s ease, transform 0.2s ease;
 
-        .theme {
-            display: flex;
-            flex-direction: row;
-        }
-    }
-
-}
-
-.code-editor {
-    flex: 1;
-    display: flex;
-    flex-direction: row;
-    overflow: hidden;
-    position: relative;
-
-    .terminal {
-        display: grid;
-        padding: 2px;
-        width: 25vw;
-        height: 90vh;
-        gap: 4px;
-        background-color: #00c9cc;
-        overflow-x: auto;
-
-        @for $i from 1 through 2 {
-            .t-#{$i} {
-                background-color: #1a1a1a;
-                color: #00ff00;
-                font-family: "Courier New", monospace;
-                font-size: 14px;
-                border: 2px solid #007acc;
-                border-radius: 5px;
-                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-                height: 44vh;
-                overflow-x: auto;
-
-
-                .heading {
-                    color: #ff9900;
-                    font-size: 18px;
-                    margin: 0;
-                    padding: 5px 0;
-                    background-color: #43494d;
-                    padding: 10px;
-                    height: 5%;
+                    &:hover {
+                        background-color: #0056b3;
+                        transform: translateY(-2px);
+                    }
                 }
 
-                .output {
+
+            }
+
+
+            .theme {
+                display: flex;
+                flex-direction: row;
+            }
+        }
+
+    }
+
+    .code-editor {
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        overflow: hidden;
+        position: relative;
+
+        .terminal {
+            display: grid;
+            padding: 2px;
+            width: 25vw;
+            height: 90vh;
+            gap: 4px;
+            background-color: #00c9cc;
+            overflow-x: auto;
+
+            @for $i from 1 through 2 {
+                .t-#{$i} {
+                    background-color: #1a1a1a;
                     color: #00ff00;
                     font-family: "Courier New", monospace;
                     font-size: 14px;
-                    margin-top: 10px;
-                    overflow: scroll;
-                    padding-left: 10px;
-                    padding-right: 10px;
-                    height: 84%;
-                }
+                    border: 2px solid #007acc;
+                    border-radius: 5px;
+                    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+                    height: 44vh;
+                    overflow-x: auto;
 
-                .output::before {
-                    content: "> ";
-                    color: #00ff00;
-                    font-weight: bold;
-                }
 
-                .error {
-                    color: #ff8787;
-                    font-weight: bold;
-                }
+                    .heading {
+                        color: #ff9900;
+                        font-size: 18px;
+                        margin: 0;
+                        padding: 5px 0;
+                        background-color: #43494d;
+                        padding: 10px;
+                        height: 5%;
+                    }
 
-                .output {
-                    color: #8cff8c;
+                    .output {
+                        color: #00ff00;
+                        font-family: "Courier New", monospace;
+                        font-size: 14px;
+                        margin-top: 10px;
+                        overflow: scroll;
+                        padding-left: 10px;
+                        padding-right: 10px;
+                        height: 84%;
+                    }
+
+                    .output::before {
+                        content: "> ";
+                        color: #00ff00;
+                        font-weight: bold;
+                    }
+
+                    .error {
+                        color: #ff8787;
+                        font-weight: bold;
+                    }
+
+                    .output {
+                        color: #8cff8c;
+                    }
+
                 }
 
             }
-
         }
     }
 }

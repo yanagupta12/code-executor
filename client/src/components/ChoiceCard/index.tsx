@@ -2,6 +2,7 @@ import { Link } from '@mui/material'
 import './Index.scss'
 import React from 'react'
 import { AuthContext } from '../../context/AuthContext'
+import { Button } from '@mui/base'
 
 const Card = () => {
   const { logout } = React.useContext(AuthContext)
@@ -13,9 +14,9 @@ const Card = () => {
       <Link className="choice" underline="none">
         Collaborate
       </Link>
-      <Link className="choice" underline="none" onClick={() => logout()}>
+      <Button className="choice" onClick={() => logout()}>
         Logout
-      </Link>
+      </Button>
     </div>
   )
 }

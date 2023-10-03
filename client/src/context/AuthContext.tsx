@@ -1,5 +1,4 @@
 import React from 'react'
-import { useFetchUserDetails } from '../hooks/useFetchUserDetails'
 export const AuthContext = React.createContext<any>({})
 
 export const AuthProvider = ({ children }: { children: any }) => {
@@ -9,18 +8,18 @@ export const AuthProvider = ({ children }: { children: any }) => {
 
   const login = async (data: any) => {
     if (data.email && data.first_name && data.last_name) {
-      setUserData(data)
+      setUserData(data);
+      window.localStorage.setItem('user', JSON.stringify(data))
       setAuth(true);
     } else {
       alert('There was a problem');
     }
   }
-  useFetchUserDetails(userEmail).then(res => {
-    setUserData(res)
-  })
+
 
   const logout = () => {
     setAuth(false)
+    window.localStorage.removeItem("user")
     document.cookie = 'user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     document.cookie = 'csrftoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
   }
@@ -44,6 +43,11 @@ export const AuthProvider = ({ children }: { children: any }) => {
       return ''
     }
 
+    function getUser() {
+      const user = window.localStorage.getItem('user');
+      user ? setUserData(JSON.parse(user)) : null;
+    }
+    getUser();
 
     const email: string = getCookie('user')
 
@@ -60,6 +64,7 @@ export const AuthProvider = ({ children }: { children: any }) => {
         userData: userData,
         login: login,
         logout: logout,
+        userEmail: userEmail
       }}
     >
       {children}

@@ -16,7 +16,7 @@ function App() {
           <Route
             path="/"
             element={
-              <LayoutwithNav>
+            <LayoutwithNav>
                 <Home />
               </LayoutwithNav>
             }
