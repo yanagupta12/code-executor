@@ -18,15 +18,18 @@ const Dashboard: React.FC = () => {
 
     return (
         <div className="page">
-            <h1>
-                Welcome to the Dashboard {userData.first_name}
-            </h1>
+            <h2>
+                Welcome to the Dashboard&nbsp;&nbsp;
+                <span className='name'>
+                    {userData.first_name}
+                </span>
+            </h2>
             <div>
                 <Button>
-                    Create Interview Room
+                    Create Room
                 </Button>
                 <Button>
-                    Join Interview Room
+                    Join Rooms
                 </Button>
             </div>
             <div className='rooms'>

@@ -37,10 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'authentication',
     'corsheaders',
-    'collaborate',
+    # 'collaborate',
 ]
 
-ASGI_APPLICATION = 'codeexec.asgi.application'
+# ASGI_APPLICATION = 'codeexec.asgi.application'
 WSGI_APPLICATION = 'codeexec.wsgi.application'
 
 MIDDLEWARE = [

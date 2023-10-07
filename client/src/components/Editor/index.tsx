@@ -7,8 +7,7 @@ import { CodeContext } from '../../context/CodeContext'
 import { Avatar, Box, IconButton, Tooltip } from '@mui/material'
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord'
 import { Link } from "react-router-dom"
-
-
+import { deepOrange } from '@mui/material/colors'
 
 function getKeyByValue<T>(
   object: Record<string, T>,
@@ -188,8 +187,14 @@ const Editor = () => {
                 sx={{ textTransform: 'uppercase', height: 50, width: 50 }}
               >
                 <Avatar
+
                   alt={`${userData.first_name} ${userData.last_name}`}
                   src={url}
+                  sx={{
+                    width: 50,
+                    height: 50,
+                    bgcolor: deepOrange[500],
+                  }}
                 />
               </IconButton>
             </Tooltip>

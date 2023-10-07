@@ -11,7 +11,8 @@ import {
   Menu,
   MenuItem,
 } from '@mui/material';
-import { Button } from '@mui/base';
+import { deepOrange } from '@mui/material/colors';
+
 
 
 
@@ -35,7 +36,11 @@ const Navbar = () => {
 
   return (
     <div className="navbar">
-      <Box sx={{ flexGrow: 3 }}>
+      <Box sx={{
+        flexGrow: 3,
+        display: 'flex',
+        flexDirection: "column",
+      }}>
         <Typography variant="h4" className="heading">
           CodeR
         </Typography>
@@ -54,11 +59,12 @@ const Navbar = () => {
           <Tooltip title="Profile Summary">
             <IconButton
               onClick={handleOpenUserMenu}
-              sx={{ textTransform: 'uppercase', height: 50, width: 50 }}
+              sx={{ textTransform: 'uppercase' }}
             >
               <Avatar
                 alt={`${userData.first_name} ${userData.last_name}`}
                 src={url}
+                sx={{ width: 50, height: 50, bgcolor: deepOrange[500] }}
               />
             </IconButton>
           </Tooltip>
