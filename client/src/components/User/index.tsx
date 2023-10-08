@@ -1,18 +1,18 @@
-import React, { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './Index.scss';
-import { useContext } from 'react';
-import { AuthContext } from '../../context/AuthContext';
-import { TextField, Button } from '@mui/material';
+import React, { useState, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
+import './Index.scss'
+import { useContext } from 'react'
+import { AuthContext } from '../../context/AuthContext'
+import { TextField, Button } from '@mui/material'
 
 const User: React.FC = () => {
-  const { userData, auth } = useContext(AuthContext);
-  const blob = new Blob([userData.image], { type: 'image/svg+xml' });
-  const url = URL.createObjectURL(blob);
+  const { userData, auth } = useContext(AuthContext)
+  const blob = new Blob([userData.image], { type: 'image/svg+xml' })
+  const url = URL.createObjectURL(blob)
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  const [editMode, setEditMode] = useState<boolean>(false);
+  const [editMode, setEditMode] = useState<boolean>(false)
 
   const firstNameRef = useRef<HTMLInputElement>(null)
   const lastNameRef = useRef<HTMLInputElement>(null)
@@ -21,13 +21,10 @@ const User: React.FC = () => {
 
   const handleClick = async () => {
     if (editMode) {
-
-
       console.log(firstNameRef.current?.value)
       console.log(lastNameRef.current?.value)
       console.log(emailRef.current?.value)
       console.log(passwordRef.current?.value)
-
 
       const data = {
         first_name: firstNameRef.current!.value,
@@ -49,11 +46,12 @@ const User: React.FC = () => {
         console.error('An error occurred:', error)
       }
     }
-    setEditMode(!editMode);
-  };
+    setEditMode(!editMode)
+  }
 
   if (!auth) {
-    navigate('/');
+    navigate('/')
+    return
   }
 
   return (
@@ -113,21 +111,14 @@ const User: React.FC = () => {
             />
           </div>
           <div className="actions">
-            <Button
-              variant="contained"
-              onClick={handleClick}
-            >
-              {editMode
-                ?
-                'Save'
-                :
-                'Edit'}
+            <Button variant="contained" onClick={handleClick}>
+              {editMode ? 'Save' : 'Edit'}
             </Button>
           </div>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default User;
+export default User

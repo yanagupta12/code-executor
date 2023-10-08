@@ -1,6 +1,6 @@
 import './Index.scss'
 
-const Footer = () =>  {
+const Footer = () => {
   return (
     <div className="footer">
       Made with &nbsp; <i className="fa fa-heart"></i> &nbsp; by Yana &copy;
@@ -9,5 +9,4 @@ const Footer = () =>  {
   )
 }
 
-
-export default Footer 
+export default Footer
