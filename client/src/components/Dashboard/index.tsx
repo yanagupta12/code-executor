@@ -5,6 +5,7 @@ import { AuthContext } from '../../context/AuthContext'
 import { Box, Button, Modal, TextField } from '@mui/material'
 import CopyToClipboard from '../CopyToClipboard'
 import CustomModal from '../CustomModal'
+import RoomCard from '../RoomCard'
 
 const modelStyle = {
   position: 'absolute' as 'absolute',
@@ -24,7 +25,7 @@ const modelStyle = {
 }
 
 const Dashboard: React.FC = () => {
-  const { auth, userData } = useContext(AuthContext)
+  const { auth, userData, userEmail } = useContext(AuthContext)
 
   if (!auth) {
     return
@@ -45,6 +46,30 @@ const Dashboard: React.FC = () => {
   const [status, setStatus] = React.useState<'success' | 'failure' | 'normal'>(
     'normal'
   )
+
+  const [rooms, setRooms] = React.useState<[object] | null>()
+
+  React.useEffect(() => {
+    const URL = 'http://localhost:8000/collaborate/get-room/?email='
+    const sanitizedUserEmail = userEmail.replace(/^"(.*)"$/, '$1')
+
+    fetch(URL + sanitizedUserEmail, {
+      method: 'GET',
+      credentials: 'include',
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.message === 'No rooms found') {
+          setRooms(null)
+        } else {
+          setRooms(data.room_data)
+        }
+        console.log(data)
+      })
+      .catch((error) => {
+        console.error('An error occurred:', error)
+      })
+  }, [userEmail])
 
   const handleCreateClose = () => {
     setCreateOpen(false)
@@ -96,12 +121,20 @@ const Dashboard: React.FC = () => {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data),
         }
-      ).then((res) => res.json())
+      )
+
+      const jsonResponse = await response.json() // Wait for the JSON parsing to complete
+
       setOpenCustomModal(true)
-      setMessage(response.message)
-      console.log(response)
-      if (response.status === 200) setStatus('success')
-      else setStatus('failure')
+      setMessage(jsonResponse.message)
+      console.log(jsonResponse)
+      console.log(response.status)
+
+      if (response.status === 200) {
+        setStatus('success')
+      } else {
+        setStatus('failure')
+      }
     } catch (error) {
       setOpenCustomModal(true)
       setMessage('An error occurred while joining the room')
@@ -195,8 +228,14 @@ const Dashboard: React.FC = () => {
 
       <div className="rooms">
         <h2>Rooms</h2>
-
-        <div>All the interview room will be listed here</div>
+        <div>
+          {rooms &&
+            rooms.map((room: any) => {
+              return (
+                <RoomCard key={room.id} data={room} userEmail={userEmail} />
+              )
+            })}
+        </div>
       </div>
     </div>
   )

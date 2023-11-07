@@ -25,11 +25,9 @@ def create_room(request):
     
             room_id = str(uuid.uuid4().hex[:10]) # Generate a random room id of 10 characters long
             
-            new_room = CollaborateRoom(room_id=room_id, name=name)
+            new_room = CollaborateRoom(room_id=room_id, name=name, owner=user)
             new_room.save()
             
-            new_room.owner = user.email  # Set the owner of the room to the current user
-
             new_room.members.add(user)  # Add the user to the room's members
             
             # new_room.members.set([member])
@@ -76,8 +74,17 @@ def join_room(request):
             return JsonResponse({'message': 'Invalid JSON data'}, status=400)
 
 
+
 @login_required
 @csrf_exempt
-def get_room_by_email(request, email):
+def get_room_by_email(request):
     if request.method == "GET":
-        pass
+        email = request.GET.get('email', None)
+        print(email)
+        room_data = CollaborateRoom.objects.filter(members__email=email)
+        print(room_data)
+        if room_data.exists():
+            return JsonResponse({'room_data': list(room_data.values())}, status=200)
+        else:
+            return JsonResponse({'message': 'No rooms found'}, status=200)
+        

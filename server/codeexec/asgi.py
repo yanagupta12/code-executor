@@ -8,7 +8,7 @@ from channels.routing import ProtocolTypeRouter, URLRouter
 import collaborate.routing
 
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'djangochat.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'codeexec.settings')
 
 application = ProtocolTypeRouter({
     "http": get_asgi_application(),
@@ -18,3 +18,4 @@ application = ProtocolTypeRouter({
         )
     )
 })
+

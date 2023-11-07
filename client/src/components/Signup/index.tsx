@@ -11,11 +11,14 @@ import Spinner from '../Spinner'
 import { AuthContext } from '../../context/AuthContext'
 import Link from '@mui/material/Link'
 
+
 const Form = ({
   setShowSignup,
 }: {
   setShowSignup: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
+
+
   const firstNameRef = useRef<HTMLInputElement>(null)
   const lastNameRef = useRef<HTMLInputElement>(null)
   const emailRef = useRef<HTMLInputElement>(null)
@@ -23,6 +26,7 @@ const Form = ({
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
   const { login } = useContext(AuthContext)
+
 
   const handleSubmit = async () => {
     if (
@@ -44,6 +48,7 @@ const Form = ({
       password: passwordRef.current!.value,
     }
 
+
     try {
       const response = await fetch('http://localhost:8000/auth/register', {
         method: 'POST',
@@ -58,6 +63,7 @@ const Form = ({
       setLoading(false)
     }
   }
+
 
   const FormComponent = () => {
     return (
@@ -178,6 +184,7 @@ const Form = ({
       </div>
     )
   }
+  
 
   return (
     <div className="login-form">
