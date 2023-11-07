@@ -11,13 +11,11 @@ from django.contrib.auth.decorators import login_required
 @csrf_exempt
 def create_room(request):
     if request.method == 'POST':
-        # Process the form data when the user submits it
         try: 
             json_data = json.loads(request.body.decode('utf-8'))
             
             name = json_data.get('name')
             user = request.user
-            # member = json_data.get('member')
             
             if name is None or user is None:
                 return JsonResponse({'message' : "Invalid JSON data"}, status=400)
