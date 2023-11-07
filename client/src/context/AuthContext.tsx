@@ -8,24 +8,23 @@ export const AuthProvider = ({ children }: { children: any }) => {
 
   const login = async (data: any) => {
     if (data.email && data.first_name && data.last_name) {
-      setUserData(data);
+      setUserData(data)
       window.localStorage.setItem('user', JSON.stringify(data))
-      setAuth(true);
+      setAuth(true)
     } else {
-      alert('There was a problem');
+      alert('There was a problem')
     }
   }
 
-
   const logout = () => {
     setAuth(false)
-    window.localStorage.removeItem("user")
-    document.cookie = 'user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-    document.cookie = 'csrftoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    window.localStorage.removeItem('user')
+    document.cookie = 'user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+    document.cookie =
+      'csrftoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
   }
 
   React.useEffect(() => {
-
     function getCookie(cookieName: string) {
       const name = cookieName + '='
       const decodedCookie = decodeURIComponent(document.cookie)
@@ -44,17 +43,16 @@ export const AuthProvider = ({ children }: { children: any }) => {
     }
 
     function getUser() {
-      const user = window.localStorage.getItem('user');
-      user ? setUserData(JSON.parse(user)) : null;
+      const user = window.localStorage.getItem('user')
+      user ? setUserData(JSON.parse(user)) : null
     }
-    getUser();
+    getUser()
 
     const email: string = getCookie('user')
 
     setUserEmail(email)
 
-    if (email) setAuth(true);
-
+    if (email) setAuth(true)
   }, [])
 
   return (
@@ -64,7 +62,7 @@ export const AuthProvider = ({ children }: { children: any }) => {
         userData: userData,
         login: login,
         logout: logout,
-        userEmail: userEmail
+        userEmail: userEmail,
       }}
     >
       {children}
