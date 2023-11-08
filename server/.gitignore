@@ -17,3 +17,6 @@ __pycache__/
 
 # Testing Requests 
 test.htttp
+
+
+fastapi_app/
