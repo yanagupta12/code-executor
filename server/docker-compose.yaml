@@ -1,0 +1,8 @@
+version: '3.9'
+
+services:
+  django:
+    image: code_executor:0.0.1
+    build: . 
+    ports:
+      - "8001:8000"
