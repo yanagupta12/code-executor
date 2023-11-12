@@ -1,7 +1,7 @@
 import React from 'react'
-// import { DEPLOYED_BACKEND_URL } from '../utils/url'
+import { DEPLOYED_BACKEND_URL } from '../utils/url'
 
-const URL =  "http://51.20.80.125:8000/" + 'code/languages/'
+const URL = DEPLOYED_BACKEND_URL + 'code/languages/'
 
 export const useFetchLanguages = () => {
   const [languages, setLanguages] = React.useState({})

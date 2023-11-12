@@ -1,8 +1,8 @@
 LANGUAGES = {
-    "go": "go", # Done 
     "js": "javascript", # Done 
     "py": "python3", # Done 
     "cpp": "cpp", # Done 
+    "go": "go", # Done 
     "c": "c", # Done 
     "rs": "rust", # Done 
     "java": "java", # Done 

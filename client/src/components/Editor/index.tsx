@@ -9,7 +9,7 @@ import { Avatar, Box, IconButton, Tooltip } from '@mui/material'
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord'
 import { Link } from 'react-router-dom'
 import { deepOrange } from '@mui/material/colors'
-import { LOCAL_BACKEND_URL } from '../../utils/url'
+import { DEPLOYED_BACKEND_URL } from '../../utils/url'
 
 function getKeyByValue<T>(
   object: Record<string, T>,
@@ -96,7 +96,7 @@ const Editor = () => {
       }
 
       try {
-        const response = await fetch(`http://51.20.80.125:8000/code/execute/`, {
+        const response = await fetch(`${DEPLOYED_BACKEND_URL}code/execute/`, {
           method: 'POST',
           credentials: 'include',
           headers: { 'Content-Type': 'application/json' },
