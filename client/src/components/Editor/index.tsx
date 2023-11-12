@@ -4,10 +4,12 @@ import React, { useEffect, useState } from 'react'
 import { LanguageContext } from '../../context/LanguageContext'
 import { AuthContext } from '../../context/AuthContext'
 import { CodeContext } from '../../context/CodeContext'
+import { ThemeContext } from '../../context/ThemeContext'
 import { Avatar, Box, IconButton, Tooltip } from '@mui/material'
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord'
 import { Link } from 'react-router-dom'
 import { deepOrange } from '@mui/material/colors'
+import { LOCAL_BACKEND_URL } from '../../utils/url'
 
 function getKeyByValue<T>(
   object: Record<string, T>,
@@ -42,13 +44,14 @@ const Editor = () => {
   } = React.useContext<any>(LanguageContext)
   const { userData, auth } = React.useContext<any>(AuthContext)
   const { code, setCode } = React.useContext<any>(CodeContext)
+  const { theme, toggleTheme } = React.useContext<any>(ThemeContext)
 
   const [stdout, setStdout] = useState<string>('')
   const [stderr, setStderr] = useState<string>('')
 
+  const [editortheme, setEditortheme] = useState<string>('vs-dark')
+
   useEffect(() => {
-    // console.log(languageCode)
-    // console.log(LanuguageRef.current.value)
     if (language.toLowerCase() == 'java')
       return alert('Please use Main class only for java')
   }, [response, language, languageCode])
@@ -56,6 +59,30 @@ const Editor = () => {
   // To get the image of user from the database, the image is in svg format
   const blob = new Blob([userData.image], { type: 'image/svg+xml' })
   const url = URL.createObjectURL(blob)
+
+  useEffect(() => {
+    if (window === undefined) return
+    const localTheme = window.localStorage.getItem('theme')
+    if (localTheme === "dark") {
+      setEditortheme("vs-dark")
+
+      const ele = document.getElementsByClassName("editor-light")[0];
+      if (ele) {
+        ele.classList.remove("editor-light")
+        ele.classList.add("editor-dark")
+      }
+    } else if (localTheme === "light") {
+
+      const ele = document.getElementsByClassName("editor-dark")[0];
+      if (ele) {
+        ele.classList.remove("editor-dark")
+        ele.classList.add("editor-light")
+      }
+      setEditortheme("vs-light")
+    } else {
+      setEditortheme("vs-dark")
+    }
+  }, [theme])
 
   const handleSubmit = async () => {
     if (!editorRef.current || language == '') {
@@ -69,7 +96,7 @@ const Editor = () => {
       }
 
       try {
-        const response = await fetch('http://localhost:8000/code/execute/', {
+        const response = await fetch(`http://51.20.80.125:8000/code/execute/`, {
           method: 'POST',
           credentials: 'include',
           headers: { 'Content-Type': 'application/json' },
@@ -112,7 +139,7 @@ const Editor = () => {
   }
 
   return (
-    <div className="editor">
+    <div className="editor-dark">
       <div className="select-bar">
         <div className="code-view">
           <Tooltip title="Go to home">
@@ -155,17 +182,32 @@ const Editor = () => {
         </div>
 
         <div className="theme">
-          <IconButton>
-            <FiberManualRecordIcon sx={{ color: 'green' }} />
-          </IconButton>
-          <IconButton>
-            <FiberManualRecordIcon sx={{ color: 'red' }} />
-          </IconButton>
-          <IconButton>
-            <FiberManualRecordIcon sx={{ color: 'yellow' }} />
-          </IconButton>
-          <IconButton>
-            <FiberManualRecordIcon sx={{ color: 'blue' }} />
+          <Tooltip title="Dark Mode">
+            <IconButton
+              style={{
+                backgroundColor: "transparent",
+                padding: "0px",
+                boxShadow: "0 2px 10px rgba(255, 255, 255, 0.1)",
+              }}
+              onClick={() => {
+                toggleTheme("dark");
+              }}
+            >
+              <FiberManualRecordIcon fontSize='large' sx={{ color: 'blue' }} />
+            </IconButton>
+          </Tooltip>
+
+          <IconButton
+            style={{
+              backgroundColor: "transparent",
+              padding: "0px",
+              boxShadow: "0 2px 10px rgba(255, 255, 255, 0.1)",
+            }}
+            onClick={() => {
+              toggleTheme("light");
+            }}
+          >
+            <FiberManualRecordIcon fontSize='large' sx={{ color: 'white' }} />
           </IconButton>
         </div>
 
@@ -192,7 +234,7 @@ const Editor = () => {
 
       <div className="code-editor">
         <MonacoEditor
-          theme="vs-dark"
+          theme={editortheme}
           language={language}
           height="90vh"
           width="75vw"

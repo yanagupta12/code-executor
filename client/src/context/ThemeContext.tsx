@@ -4,8 +4,10 @@ export const ThemeContext = React.createContext({})
 
 export const ThemeProvider = ({ children }: { children: any }) => {
   const THEMES: Array<string> = ['dark', 'light']
+  
 
   const [theme, setTheme] = React.useState<string>('dark')
+
 
   const toggleTheme = (theme: string) => {
     if (window === undefined) return
@@ -13,13 +15,14 @@ export const ThemeProvider = ({ children }: { children: any }) => {
     setTheme(theme)
   }
 
+
   return (
     <ThemeContext.Provider
       value={{
         THEMES: THEMES,
-        theme,
+        theme: theme,
         setTheme: setTheme,
-        toggleThmeme: toggleTheme,
+        toggleTheme: toggleTheme,
       }}
     >
       {children}

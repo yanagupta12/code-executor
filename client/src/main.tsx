@@ -5,14 +5,17 @@ import './assets/globals.scss'
 import { AuthProvider } from './context/AuthContext'
 import { LanguageProvider } from './context/LanguageContext.tsx'
 import { CodeProvider } from './context/CodeContext.tsx'
+import { ThemeProvider } from './context/ThemeContext.tsx'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <AuthProvider>
     <CodeProvider>
       <LanguageProvider>
-        <React.StrictMode>
-          <App />
-        </React.StrictMode>
+        <ThemeProvider>
+          <React.StrictMode>
+            <App />
+          </React.StrictMode>
+        </ThemeProvider>
       </LanguageProvider>
     </CodeProvider>
   </AuthProvider>

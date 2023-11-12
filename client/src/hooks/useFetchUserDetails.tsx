@@ -1,6 +1,7 @@
 import React from 'react'
+import { DEPLOYED_BACKEND_URL } from '../utils/url'
 
-const URL = 'http://localhost:8000/auth/get?email='
+const URL = DEPLOYED_BACKEND_URL +  '/auth/get?email='
 
 export const useFetchUserDetails = async (email: string) => {
   const [userDetails, setUserDetails] = React.useState({})
