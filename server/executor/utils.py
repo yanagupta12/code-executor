@@ -1,7 +1,7 @@
 LANGUAGES = {
     "go": "go", # Done 
     "js": "javascript", # Done 
-    "py": "python", # Done 
+    "py": "python3", # Done 
     "cpp": "cpp", # Done 
     "c": "c", # Done 
     "rs": "rust", # Done 
@@ -17,7 +17,7 @@ BUILD_COMMANDS = {
     "cs": ["csc", "/out:Main.exe", "Main.cs"],
     "go": ["go", "build", "main.go"],
     "rs": ["rustc", "-o", "main", "main.rs"],
-    "py": ["python"]
+    "py": ["python3", "main.py"]
 }
 
 

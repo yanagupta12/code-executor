@@ -35,8 +35,9 @@ def compile_language(request):
                 with open(code_file_path, "w") as code_file:
                     code_file.write(source_code)
                     
-                if language_code == "py":
-                    process = subprocess.Popen(["python", "main.py"], cwd=temp_dir, stderr=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
+                if language_code == "py": # Production not done
+                    build_command = ALL_BUILD_COMMANDS[language_code]
+                    process = subprocess.Popen(build_command, cwd=temp_dir, stderr=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
                     stdout, stderr = process.communicate()
                     return JsonResponse({'result': stdout, 'error': stderr}, status=200)
                 
@@ -48,7 +49,7 @@ def compile_language(request):
                                   
                
                 
-                if language_code == "java": 
+                if language_code == "java": # Production not done 
                     build_command = ALL_BUILD_COMMANDS[language_code]                        
                     subprocess.run(build_command, cwd=temp_dir, stderr=subprocess.STDOUT, check=True)
                     process = subprocess.Popen(build_command, cwd=temp_dir, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
