@@ -2,6 +2,9 @@
 Coder is a code sandbox to run code snippet. It run the code and generates result as per the code provided. It supports major programming languages like C, C++, Python, Java, Go, Rust, JavaScript. To run the code of the language requirements should be installed on the system. 
 
 
+## Hosted Link  https://code-executor-zeta.vercel.app/
+
+
 ## LOGO
 ![logo](https://github.com/Yana-Gupta/code-executor/assets/103108630/ffaa9ec3-878b-41fa-9e5c-028145c293b6)
 
@@ -27,7 +30,9 @@ Coder is a code sandbox to run code snippet. It run the code and generates resul
 ## Screenshots of the website
 
   1. Home Page 
-![image](https://github.com/Yana-Gupta/code-executor/assets/103108630/0819ae84-5d2b-47cf-88c6-cf5fcfefe44d)
+
+     ![image](https://github.com/Yana-Gupta/code-executor/assets/103108630/0819ae84-5d2b-47cf-88c6-cf5fcfefe44d)
+
   2. Editor
      
      Snapshot 1
@@ -44,9 +49,24 @@ Coder is a code sandbox to run code snippet. It run the code and generates resul
 2. Vite tool for react
 3. TypeScript
 4. Sqlite database
+5. Docker for containerization
+
+
+## Run a docker container
+
+  Download the code
+
+  1. Run the command 
+  ```
+  docker compose up
+  ```
+  
+  Application will start at http://localhost:5173/
 
 
 ## Run in local Environment 
+
+  Download the code 
 
   1. Backend
      

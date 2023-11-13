@@ -197,18 +197,22 @@ const Editor = () => {
             </IconButton>
           </Tooltip>
 
-          <IconButton
-            style={{
-              backgroundColor: "transparent",
-              padding: "0px",
-              boxShadow: "0 2px 10px rgba(255, 255, 255, 0.1)",
-            }}
-            onClick={() => {
-              toggleTheme("light");
-            }}
-          >
-            <FiberManualRecordIcon fontSize='large' sx={{ color: 'white' }} />
-          </IconButton>
+          <Tooltip title="Light Mode">
+            <IconButton
+              style={{
+                backgroundColor: "transparent",
+                padding: "0px",
+                boxShadow: "0 2px 10px rgba(255, 255, 255, 0.1)",
+              }}
+              onClick={() => {
+                toggleTheme("light");
+              }}
+            >
+              <FiberManualRecordIcon fontSize='large' sx={{ color: 'white' }} />
+            </IconButton>
+            
+          </Tooltip>
+
         </div>
 
         {auth && (

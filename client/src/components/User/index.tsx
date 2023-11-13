@@ -34,7 +34,7 @@ const User: React.FC = () => {
       }
 
       try {
-        const response = await fetch('http://localhost:8000/auth/update', {
+        const response = await fetch('http://localhost:8001/auth/update', {
           method: 'PUT',
           credentials: 'include',
           headers: { 'Content-Type': 'application/json' },

@@ -1,0 +1,13 @@
+version: '3.9'
+
+services:
+  server:
+    image: server:0.0.1
+    build: ./server
+    ports:
+      - '8001:8000'
+  client:
+    image: client:0.0.1
+    build: ./client
+    ports:
+      - '5173:5173'
