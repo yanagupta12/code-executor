@@ -42,9 +42,11 @@ const Editor = () => {
     response,
     setResponse,
   } = React.useContext<any>(LanguageContext)
+
   const { userData, auth } = React.useContext<any>(AuthContext)
-  const { code, setCode } = React.useContext<any>(CodeContext)
+  const { code, setCode, input, setInput } = React.useContext<any>(CodeContext)
   const { theme, toggleTheme } = React.useContext<any>(ThemeContext)
+
 
   const [stdout, setStdout] = useState<string>('')
   const [stderr, setStderr] = useState<string>('')
@@ -93,6 +95,7 @@ const Editor = () => {
       const data = {
         source_code: code,
         language_code: languageCode,
+        source_input: input,
       }
 
       try {
@@ -258,7 +261,7 @@ const Editor = () => {
 
           <div className="t-2">
             <h1 className="heading">Input Terminal</h1>
-            <div className="output"></div>
+            <textarea className="input" onChange={(e) => setInput(e.target.value)}/>
           </div>
         </div>
       </div>
