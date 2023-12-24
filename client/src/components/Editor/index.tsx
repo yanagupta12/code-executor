@@ -25,6 +25,16 @@ function getKeyByValue<T>(
   }
 }
 
+const temp: any = {
+  "c": "c",
+  "python3": "python",
+  "cpp": "cpp",
+  "java": "java",
+  "javascript": "javascript",
+  "go": "go",
+  "rust": "rust",
+}
+
 const Editor = () => {
   const LanuguageRef = React.useRef<any>(null)
   const editorRef = React.useRef<any>(null)
@@ -213,7 +223,7 @@ const Editor = () => {
             >
               <FiberManualRecordIcon fontSize='large' sx={{ color: 'white' }} />
             </IconButton>
-            
+
           </Tooltip>
 
         </div>
@@ -242,7 +252,7 @@ const Editor = () => {
       <div className="code-editor">
         <MonacoEditor
           theme={editortheme}
-          language={language}
+          language={temp[language.toLowerCase()]}
           height="90vh"
           width="75vw"
           onMount={handleEditorDidMount}
@@ -261,7 +271,7 @@ const Editor = () => {
 
           <div className="t-2">
             <h1 className="heading">Input Terminal</h1>
-            <textarea className="input" onChange={(e) => setInput(e.target.value)}/>
+            <textarea className="input" onChange={(e) => setInput(e.target.value)} />
           </div>
         </div>
       </div>
