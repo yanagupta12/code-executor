@@ -6,6 +6,8 @@ services:
     build: ./server
     ports:
       - '8001:8000'
+    volumes:
+      - ./server:/app
   client:
     image: client:0.0.1
     build: ./client
