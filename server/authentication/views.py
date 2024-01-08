@@ -39,7 +39,6 @@ def register_user(request):
         except json.decoder.JSONDecodeError as e:
             return HttpResponse('Invalid JSON data', status=400)
     
-
 @csrf_exempt
 def login_user(request):
     if request.method == "POST":
@@ -64,28 +63,26 @@ def login_user(request):
         except Exception as e: 
             return HttpResponse(e)
         
-        
-@login_required    
 @csrf_exempt
 def logout_user(request):
     if request.method == "POST":
         logout(request)
         return HttpResponse("Logout successful")
     
-  
-@login_required        
 @csrf_exempt
 def update_user(request):
     if request.method == "PUT":
-        email = request.user.email
         try:
             json_data = json.loads(request.body.decode('utf-8'))
             password = json_data.get("password")
             first_name = json_data.get("first_name")
             last_name = json_data.get("last_name")
             new_image = json_data.get("image")
+            email = json_data.get("email")
             try:
                 user = User.objects.get(email = email)
+                if user is None:
+                    return HttpResponse("User does not exist")
                 if first_name is not None: 
                     user.first_name = first_name
                 if last_name is not None:
@@ -106,7 +103,6 @@ def update_user(request):
             return HttpResponse("Invalid JSON data", status=400)
         
         
-@login_required
 @csrf_exempt
 def get_user_by_email(request):
     if request.method == "GET":

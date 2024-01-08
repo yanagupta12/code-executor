@@ -61,7 +61,8 @@ def compile_language(request):
                         # Create a temporary file to store input
                         input_file_path = os.path.join(temp_dir, "input.txt")
                         with open(input_file_path, "w") as input_file:
-                            input_file.write(source_input)
+                            if source_input is not None: 
+                                input_file.write(source_input)
 
                         process = subprocess.Popen(["java", "main"], cwd=temp_dir, stderr=subprocess.PIPE, stdout=subprocess.PIPE, stdin=subprocess.PIPE, text=True)
                         result, error = process.communicate(input=source_input)
@@ -95,23 +96,27 @@ def compile_language(request):
                     error = ""
 
                     try:
+                        print(source_code)
                         go_file_path = os.path.join(temp_dir, "main.go")
                         with open(go_file_path, "w") as go_file:
                             go_file.write(source_code)
 
                         input_file_path = os.path.join(temp_dir, "input.txt")
                         with open(input_file_path, "w") as input_file:
-                            input_file.write(source_input)
+                            if source_input is not None: 
+                                input_file.write(source_input)
+                            else: 
+                                input_file.write("")
 
-                        process = subprocess.Popen(["go", "run", go_file_path], cwd=temp_dir, stderr=subprocess.PIPE, stdout=subprocess.PIPE, text=True, stdin=subprocess.PIPE)
-                        result, error = process.communicate(input=source_input)
-                        process.wait()
+                        process = subprocess.run(["go", "run", go_file_path], cwd=temp_dir, stderr=subprocess.PIPE, stdout=subprocess.PIPE, text=True, input=source_input)
 
-                    except subprocess.CalledProcessError as e:
-                        error = e.stderr
+                        if process.returncode != 0:
+                            error = process.stderr
+                        else:
+                            result = process.stdout
+
                     except Exception as e:
                         error = str(e)
-                    
 
                     return JsonResponse({'result': result, 'error': error}, status=200)
 

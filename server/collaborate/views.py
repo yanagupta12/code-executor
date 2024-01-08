@@ -7,7 +7,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 
 
-@login_required
 @csrf_exempt
 def create_room(request):
     if request.method == 'POST':
@@ -37,7 +36,6 @@ def create_room(request):
         
         
     
-@login_required
 @csrf_exempt
 def join_room(request):
     if request.method == "POST":
@@ -73,7 +71,6 @@ def join_room(request):
 
 
 
-@login_required
 @csrf_exempt
 def get_room_by_email(request):
     if request.method == "GET":

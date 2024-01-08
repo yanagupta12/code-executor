@@ -5,6 +5,10 @@ import { useContext } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import { TextField, Button } from '@mui/material'
 
+import { DEPLOYED_BACKEND_URL } from '../../utils/url'
+
+
+
 const User: React.FC = () => {
   const { userData, auth } = useContext(AuthContext)
   const blob = new Blob([userData.image], { type: 'image/svg+xml' })
@@ -34,12 +38,14 @@ const User: React.FC = () => {
       }
 
       try {
-        const response = await fetch('http://localhost:8001/auth/update', {
+        const response = await fetch( DEPLOYED_BACKEND_URL +  'auth/update', {
           method: 'PUT',
           credentials: 'include',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data),
-        }).then((res) => res.json())
+        }).then((res) => {
+          console.log(res)
+          res.json()})
 
         console.log(response)
       } catch (error) {

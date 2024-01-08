@@ -8,7 +8,7 @@ const Room = () => {
   // const [socket, setSocket] = useState<WebSocket>()
 
   useEffect(() => {
-    const URL = 'http://localhost:8001/collaborate/get-room-by-id?room_id='
+    const URL = 'http://localhost:8000/collaborate/get-room-by-id?room_id='
     const fetchData = async () => {
       try {
         const response = await fetch(URL + sanitizedRoomId, {
