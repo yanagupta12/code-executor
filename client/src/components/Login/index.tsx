@@ -37,7 +37,7 @@ const Form = ({
       password: passwordRef.current!.value,
     }
     try {
-      const response = await fetch('http://localhost:8001/auth/login', {
+      const response = await fetch('http://localhost:8000/auth/login', {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },

@@ -50,7 +50,7 @@ const Dashboard: React.FC = () => {
   const [rooms, setRooms] = React.useState<[object] | null>()
 
   React.useEffect(() => {
-    const URL = 'http://localhost:8001/collaborate/get-room/?email='
+    const URL = 'http://localhost:8000/collaborate/get-room/?email='
     const sanitizedUserEmail = userEmail.replace(/^"(.*)"$/, '$1')
 
     fetch(URL + sanitizedUserEmail, {
@@ -87,7 +87,7 @@ const Dashboard: React.FC = () => {
 
     try {
       const response = await fetch(
-        'http://localhost:8001/collaborate/create-room/',
+        'http://localhost:8000/collaborate/create-room/',
         {
           method: 'POST',
           credentials: 'include',
@@ -114,7 +114,7 @@ const Dashboard: React.FC = () => {
     }
     try {
       const response = await fetch(
-        'http://localhost:8001/collaborate/join-room/',
+        'http://localhost:8000/collaborate/join-room/',
         {
           method: 'POST',
           credentials: 'include',

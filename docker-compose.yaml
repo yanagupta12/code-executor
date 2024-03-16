@@ -1,13 +1,18 @@
-version: '3.9'
+version: '1.0.1'
 
 services:
   server:
     image: server:0.0.1
     build: ./server
     ports:
-      - '8001:8000'
+      - '8000:8000'
+    volumes:
+      - ./server:/app
+
   client:
     image: client:0.0.1
     build: ./client
     ports:
       - '5173:5173'
+    depends_on:
+      - server

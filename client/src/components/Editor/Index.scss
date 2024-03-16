@@ -171,6 +171,18 @@ body {
                         font-weight: bold;
                     }
 
+                    .input {
+                        color: #00ff00;
+                        font-family: "Courier New", monospace;
+                        font-size: 14px;
+                        margin-top: 10px;
+                        overflow: scroll;
+                        padding-left: 10px;
+                        padding-right: 10px;
+                        height: 84%;
+                        width: 100%;
+                    }
+
                     .error {
                         color: #ff8787;
                         font-weight: bold;
